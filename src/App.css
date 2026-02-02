@@ -180,7 +180,8 @@
   border-top: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.privacy-link {
+.privacy-link,
+.reset-link {
   background: none;
   border: none;
   color: #667eea;
@@ -190,8 +191,18 @@
   padding: 0.25rem;
 }
 
-.privacy-link:hover {
+.privacy-link:hover,
+.reset-link:hover {
   color: #5568d3;
+}
+
+.reset-link {
+  color: #ff5252;
+  margin-right: 1rem;
+}
+
+.reset-link:hover {
+  color: #d32f2f;
 }
 
 .waiting-message {

@@ -276,6 +276,14 @@ const App: React.FC = () => {
       </main>
 
       <footer className="app-footer">
+        {isHost && (
+          <button
+            className="reset-link"
+            onClick={resetGame}
+          >
+            Reset Game
+          </button>
+        )}
         <button
           className="privacy-link"
           onClick={() => setShowPrivacyPolicy(true)}
