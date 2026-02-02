@@ -1,0 +1,194 @@
+.results-panel {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
+}
+
+.results-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  max-width: 800px;
+  width: 100%;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+}
+
+.results-card h2 {
+  color: #667eea;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-size: 1.25rem;
+}
+
+@media (min-width: 768px) {
+  .results-card {
+    border-radius: 16px;
+    padding: 3rem;
+  }
+
+  .results-card h2 {
+    font-size: 2rem;
+  }
+}
+
+.player-progress {
+  text-align: center;
+  color: #764ba2;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+.reveal-section {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.reveal-section h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.lie-reveal {
+  background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 12px;
+  font-size: 1.2rem;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(255, 107, 107, 0.3);
+}
+
+.statements-results {
+  margin-bottom: 2rem;
+}
+
+.statements-results h3 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.result-statement {
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 8px;
+  margin-bottom: 0.75rem;
+}
+
+.result-statement.is-truth {
+  background: rgba(76, 175, 80, 0.1);
+  border: 2px solid #4caf50;
+}
+
+.result-statement.is-lie {
+  background: rgba(255, 107, 107, 0.1);
+  border: 2px solid #ff6b6b;
+}
+
+.result-number {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  margin-right: 1rem;
+  flex-shrink: 0;
+}
+
+.is-truth .result-number {
+  background: #4caf50;
+  color: white;
+}
+
+.is-lie .result-number {
+  background: #ff6b6b;
+  color: white;
+}
+
+.result-content {
+  flex: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.result-text {
+  color: #333;
+  font-size: 1rem;
+}
+
+.result-label {
+  font-weight: bold;
+  font-size: 0.9rem;
+}
+
+.is-truth .result-label {
+  color: #4caf50;
+}
+
+.is-lie .result-label {
+  color: #ff6b6b;
+}
+
+.voting-summary {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .voting-summary {
+    grid-template-columns: 1fr;
+  }
+}
+
+.summary-column {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.summary-column h4 {
+  color: #333;
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.empty-list {
+  color: #999;
+  font-style: italic;
+  text-align: center;
+}
+
+.voters-list {
+  list-style: none;
+  padding: 0;
+}
+
+.voter-item {
+  padding: 0.5rem;
+  margin-bottom: 0.5rem;
+  border-radius: 4px;
+  font-weight: 500;
+}
+
+.voter-item.correct {
+  background: rgba(76, 175, 80, 0.1);
+  color: #4caf50;
+}
+
+.voter-item.incorrect {
+  background: rgba(255, 107, 107, 0.1);
+  color: #ff6b6b;
+}
+
+.results-actions {
+  text-align: center;
+}

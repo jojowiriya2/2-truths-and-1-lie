@@ -1,0 +1,21 @@
+{
+  "appName": "2 Truths and 1 Lie",
+  "sdkVersion": "SDK_V2",
+  "sdkUri": "https://miro.com/app/static/sdk/v2/miro.js",
+  "developer": {
+    "name": "Wiriya Thongyut",
+    "email": "jowry6@gmail.com"
+  },
+  "scopes": [
+    "boards:read",
+    "boards:write",
+    "identity:read"
+  ],
+  "redirectUris": [
+    "https://two-truths-one-lie-eta.vercel.app"
+  ],
+  "boardPicker": {
+    "url": "https://two-truths-one-lie-eta.vercel.app",
+    "icon24Uri": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%23667eea'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z'/%3E%3C/svg%3E"
+  }
+}
