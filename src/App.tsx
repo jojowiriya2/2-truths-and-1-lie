@@ -4,6 +4,7 @@ import ReadyScreen from './components/ReadyScreen';
 import GameSetup from './components/GameSetup';
 import VotingPanel from './components/VotingPanel';
 import ResultsPanel from './components/ResultsPanel';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import './App.css';
 import {
   getGameState,
@@ -18,6 +19,7 @@ import {
   joinGame,
   setUserReady,
   openModalForAll,
+  removeConnectedUser,
   GameState,
 } from './miroStorage';
 
@@ -41,6 +43,7 @@ const App: React.FC = () => {
   const [currentUserId, setCurrentUserId] = useState<string>('');
   const [currentUserName, setCurrentUserName] = useState<string>('');
   const [isHost, setIsHost] = useState<boolean>(false);
+  const [showPrivacyPolicy, setShowPrivacyPolicy] = useState<boolean>(false);
 
   useEffect(() => {
     // Initialize Miro SDK and setup real-time sync
@@ -48,24 +51,27 @@ const App: React.FC = () => {
       try {
         // Get current user info first
         const userInfo = await window.miro.board.getUserInfo();
-        console.log('User info:', userInfo);
         setCurrentUserId(userInfo.id);
         setCurrentUserName(userInfo.name);
 
-        // Initialize or load game state
+        // Check if game state already exists
         let state = await getGameState();
+
         if (!state) {
-          // First user becomes host
+          // No game exists - this user becomes host and initializes
           await initializeGameState(userInfo.id);
-          state = await getGameState();
           setIsHost(true);
+          state = await getGameState();
         } else {
-          // Check if this user is host
+          // Game exists - check if this user is the host
           setIsHost(state.hostUserId === userInfo.id);
         }
 
-        // Join the game
+        // Join the game (adds user to connectedUsers if not already there)
         await joinGame(userInfo.id, userInfo.name);
+
+        // Refresh state after joining
+        state = await getGameState();
 
         // Update local state with storage state
         if (state) {
@@ -80,7 +86,6 @@ const App: React.FC = () => {
 
         // Subscribe to real-time updates from storage
         const unsubscribe = subscribeToGameState((newState: GameState) => {
-          console.log('Game state updated:', newState);
           setGamePhase(newState.gamePhase);
           setConnectedUsers(newState.connectedUsers);
           setPlayers(newState.players);
@@ -128,13 +133,10 @@ const App: React.FC = () => {
   }, []);
 
   const handleReady = async () => {
-    console.log('handleReady called, currentUserId:', currentUserId);
     if (!currentUserId) {
-      console.error('Cannot set ready - currentUserId is empty');
       return;
     }
     await setUserReady(currentUserId, true);
-    console.log('User marked as ready');
   };
 
   const handleStartSetup = async () => {
@@ -172,19 +174,9 @@ const App: React.FC = () => {
     await resetGameInStorage();
   };
 
-  // Reset game when modal is closed
-  useEffect(() => {
-    const handleModalClose = async () => {
-      await resetGameInStorage();
-    };
-
-    // Listen for when the modal/window is closed
-    window.addEventListener('beforeunload', handleModalClose);
-
-    return () => {
-      window.removeEventListener('beforeunload', handleModalClose);
-    };
-  }, []);
+  const handleRemovePlayer = async (userId: string) => {
+    await removeConnectedUser(userId);
+  };
 
   return (
     <div className="app">
@@ -201,6 +193,7 @@ const App: React.FC = () => {
             isHost={isHost}
             onReady={handleReady}
             onStartSetup={handleStartSetup}
+            onRemovePlayer={handleRemovePlayer}
           />
         )}
 
@@ -233,6 +226,7 @@ const App: React.FC = () => {
             onNextPlayer={nextPlayer}
             currentPlayerIndex={currentPlayerIndex}
             totalPlayers={players.length}
+            isHost={isHost}
           />
         )}
 
@@ -261,12 +255,29 @@ const App: React.FC = () => {
                 <p className="empty-message">No votes were cast!</p>
               )}
             </div>
-            <button onClick={resetGame} className="btn btn-primary">
-              Play Again
-            </button>
+            {isHost ? (
+              <button onClick={resetGame} className="btn btn-primary">
+                Play Again
+              </button>
+            ) : (
+              <p className="waiting-message">Waiting for host to start a new game...</p>
+            )}
           </div>
         )}
       </main>
+
+      <footer className="app-footer">
+        <button
+          className="privacy-link"
+          onClick={() => setShowPrivacyPolicy(true)}
+        >
+          Privacy Policy
+        </button>
+      </footer>
+
+      {showPrivacyPolicy && (
+        <PrivacyPolicy onClose={() => setShowPrivacyPolicy(false)} />
+      )}
     </div>
   );
 };

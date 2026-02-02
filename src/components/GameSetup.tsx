@@ -23,8 +23,6 @@ const GameSetup: React.FC<GameSetupProps> = ({ onStartGame, currentUserId, playe
   const allSubmitted = connectedUsers.length > 0 && connectedUsers.every(u => u.hasSubmittedStatements);
 
   const addPlayer = async () => {
-    console.log('Add player clicked, currentUserId:', currentUserId);
-
     // Prevent submission if already submitting
     if (isSubmitting) {
       return;
@@ -39,7 +37,6 @@ const GameSetup: React.FC<GameSetupProps> = ({ onStartGame, currentUserId, playe
     // Also check if user already has a player in the players array
     const existingPlayer = players.find(p => p.createdBy === currentUserId);
     if (existingPlayer) {
-      console.log('User already has a player, preventing duplicate');
       alert("You've already submitted your statements!");
       return;
     }
@@ -222,9 +219,7 @@ const GameSetup: React.FC<GameSetupProps> = ({ onStartGame, currentUserId, playe
           )}
 
           {!isHost && allSubmitted && players.length >= 2 && (
-            <button onClick={startGame} className="btn btn-primary btn-large" style={{marginTop: '1rem'}}>
-              Start Game (All Ready)
-            </button>
+            <p className="waiting-host-message">Waiting for host to start the game...</p>
           )}
 
           {!allSubmitted && (

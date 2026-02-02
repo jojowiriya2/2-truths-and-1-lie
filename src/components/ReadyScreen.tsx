@@ -8,6 +8,7 @@ interface ReadyScreenProps {
   isHost: boolean;
   onReady: () => void;
   onStartSetup: () => void;
+  onRemovePlayer: (userId: string) => void;
 }
 
 const ReadyScreen: React.FC<ReadyScreenProps> = ({
@@ -16,6 +17,7 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({
   isHost,
   onReady,
   onStartSetup,
+  onRemovePlayer,
 }) => {
   const [isReadyLoading, setIsReadyLoading] = useState(false);
   const currentUser = connectedUsers.find(u => u.userId === currentUserId);
@@ -36,10 +38,6 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({
             ? "You are the HOST. You can start the game anytime."
             : "You are a PLAYER. Wait for the host to start the game."}
         </p>
-        <p style={{color: '#999', fontSize: '0.9rem', textAlign: 'center'}}>
-          Debug: isHost={isHost ? 'true' : 'false'}
-        </p>
-
         <div className="players-list">
           <h3>Players ({connectedUsers.length})</h3>
           {connectedUsers.map((user) => (
@@ -50,6 +48,15 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({
               <span className="ready-status">
                 {user.isReady ? '✓ Ready' : '⏳ Not Ready'}
               </span>
+              {isHost && user.userId !== currentUserId && (
+                <button
+                  className="btn-remove"
+                  onClick={() => onRemovePlayer(user.userId)}
+                  title="Remove player"
+                >
+                  ✕
+                </button>
+              )}
             </div>
           ))}
         </div>
@@ -72,17 +79,6 @@ const ReadyScreen: React.FC<ReadyScreenProps> = ({
           {isHost && (
             <button onClick={onStartSetup} className="btn btn-primary btn-large">
               Start Game Setup
-            </button>
-          )}
-
-          {/* Emergency start button if no host */}
-          {!isHost && connectedUsers.length >= 2 && (
-            <button
-              onClick={onStartSetup}
-              className="btn btn-secondary btn-large"
-              style={{marginTop: '1rem'}}
-            >
-              Force Start (No Host Detected)
             </button>
           )}
         </div>

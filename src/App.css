@@ -172,3 +172,31 @@
   display: block;
   margin: 0 auto;
 }
+
+.app-footer {
+  background-color: rgba(255, 255, 255, 0.9);
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.privacy-link {
+  background: none;
+  border: none;
+  color: #667eea;
+  font-size: 0.8rem;
+  cursor: pointer;
+  text-decoration: underline;
+  padding: 0.25rem;
+}
+
+.privacy-link:hover {
+  color: #5568d3;
+}
+
+.waiting-message {
+  color: #667eea;
+  font-style: italic;
+  text-align: center;
+  padding: 1rem 0;
+}

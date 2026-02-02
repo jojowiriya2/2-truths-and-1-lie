@@ -108,3 +108,23 @@
   margin: 0;
   font-size: 0.9rem;
 }
+
+.btn-remove {
+  background: #ff5252;
+  color: white;
+  border: none;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 0.5rem;
+  transition: background 0.2s ease;
+}
+
+.btn-remove:hover {
+  background: #d32f2f;
+}

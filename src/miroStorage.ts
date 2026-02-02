@@ -240,24 +240,30 @@ export async function joinGame(userId: string, userName: string): Promise<void> 
 }
 
 /**
+ * Remove a connected user from the game (host only)
+ */
+export async function removeConnectedUser(userId: string): Promise<void> {
+  const currentState = await getGameState();
+  if (!currentState) return;
+
+  const updatedUsers = currentState.connectedUsers.filter(u => u.userId !== userId);
+  await updateGameState({ connectedUsers: updatedUsers });
+}
+
+/**
  * Mark user as ready
  */
 export async function setUserReady(userId: string, isReady: boolean): Promise<void> {
-  console.log('setUserReady called with userId:', userId, 'isReady:', isReady);
   const currentState = await getGameState();
   if (!currentState) {
-    console.error('setUserReady: No game state found');
     return;
   }
 
-  console.log('Current connected users:', currentState.connectedUsers);
   const updatedUsers = currentState.connectedUsers.map(user =>
     user.userId === userId ? { ...user, isReady } : user
   );
-  console.log('Updated users:', updatedUsers);
 
   await updateGameState({ connectedUsers: updatedUsers });
-  console.log('User ready state updated in storage');
 }
 
 /**

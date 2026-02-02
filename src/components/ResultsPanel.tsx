@@ -8,6 +8,7 @@ interface ResultsPanelProps {
   onNextPlayer: () => void;
   currentPlayerIndex: number;
   totalPlayers: number;
+  isHost: boolean;
 }
 
 const ResultsPanel: React.FC<ResultsPanelProps> = ({
@@ -16,6 +17,7 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({
   onNextPlayer,
   currentPlayerIndex,
   totalPlayers,
+  isHost,
 }) => {
   const lieStatement = player.statements.find((s) => s.isLie);
   const correctVoters = votes.filter((v) => v.statementId === lieStatement?.id);
@@ -86,9 +88,13 @@ const ResultsPanel: React.FC<ResultsPanelProps> = ({
         </div>
 
         <div className="results-actions">
-          <button onClick={onNextPlayer} className="btn btn-primary">
-            {isLastPlayer ? 'View Final Results' : 'Next Player'}
-          </button>
+          {isHost ? (
+            <button onClick={onNextPlayer} className="btn btn-primary">
+              {isLastPlayer ? 'View Final Results' : 'Next Player'}
+            </button>
+          ) : (
+            <p className="waiting-message">Waiting for host to continue...</p>
+          )}
         </div>
       </div>
     </div>
