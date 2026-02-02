@@ -4,6 +4,7 @@ import ReadyScreen from './components/ReadyScreen';
 import GameSetup from './components/GameSetup';
 import VotingPanel from './components/VotingPanel';
 import ResultsPanel from './components/ResultsPanel';
+import PrivacyPolicyPage from './components/PrivacyPolicyPage';
 import PrivacyPolicy from './components/PrivacyPolicy';
 import './App.css';
 import {
@@ -23,6 +24,9 @@ import {
   GameState,
 } from './miroStorage';
 
+// Check if we're on the privacy page
+const isPrivacyPage = window.location.pathname === '/privacy' || window.location.pathname === '/privacy/';
+
 declare global {
   interface Window {
     miro: any;
@@ -30,6 +34,11 @@ declare global {
 }
 
 const App: React.FC = () => {
+  // If on privacy page, render standalone privacy policy
+  if (isPrivacyPage) {
+    return <PrivacyPolicyPage />;
+  }
+
   // Sync state from Miro storage (shared across all users)
   const [gamePhase, setGamePhase] = useState<GamePhase>('lobby');
   const [connectedUsers, setConnectedUsers] = useState<ConnectedUser[]>([]);
